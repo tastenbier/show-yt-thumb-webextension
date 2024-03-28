@@ -1,7 +1,5 @@
-browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  let videoId = new URL(location).searchParams.get("v")
-
-  document.body.textContent = "";
+browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  let videoId = new URL(tabs[0].url).searchParams.get("v");
 
   ["maxresdefault", "sddefault", "hqdefault", "0", "mqdefault", "default", "1",
     "2", "3"].forEach(filename => {
@@ -12,6 +10,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
       let link = document.createElement("a");
       link.href = url;
+      link.setAttribute("class", "thumbnail");
       link.appendChild(image);
 
       document.body.appendChild(link);
